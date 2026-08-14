@@ -181,6 +181,18 @@
   .card::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
     border:1px solid transparent;transition:border-color .18s ease}
   .card:hover::after{border-color:var(--accent)}
+
+  /* -- fast ringknapp pa mobil -- */
+  .callbar{position:fixed;left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));
+    z-index:60;display:none;align-items:center;justify-content:center;gap:10px;
+    padding:16px 20px;border-radius:16px;color:#fff;font-weight:800;font-size:1.05rem;
+    text-decoration:none;background:linear-gradient(135deg,var(--accent),#00723a);
+    box-shadow:0 12px 32px rgba(0,0,0,.25);transform:translateY(140%);transition:transform .3s ease}
+  .callbar.show{transform:none}
+  @media(max-width:760px){
+    .callbar{display:flex}
+    footer{padding-bottom:110px}
+  }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "name": "Kortedala Glas AB", "url": "https://kortedalaglas.se/", "image": "https://kortedalaglas.se/og.png", "telephone": "+4631460040", "address": {"@type": "PostalAddress", "streetAddress": "Minutgatan 2", "postalCode": "415 31", "addressLocality": "Göteborg", "addressCountry": "SE"}, "openingHoursSpecification": {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "16:00"}, "priceRange": "$$"}</script>
 </head>
@@ -411,6 +423,7 @@ c45 9 224 7 285 -3z M7053 1071 c-116 -40 -193 -124 -193 -212 0 -26 3 -55 6
 
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 
+<a class="callbar" href="tel:+4631460040" aria-label="Ring oss"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg> Ring 031-46 00 40</a>
 <script>
 (function(){
   var els=document.querySelectorAll('.card,.contact,.section-title');
@@ -419,6 +432,14 @@ c45 9 224 7 285 -3z M7053 1071 c-116 -40 -193 -124 -193 -212 0 -26 3 -55 6
   var io=new IntersectionObserver(function(es){es.forEach(function(en){
     if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
   els.forEach(function(e){io.observe(e)});
+})();
+</script>
+
+<script>
+(function(){
+  var bar=document.querySelector('.callbar');if(!bar)return;
+  function upd(){if(window.scrollY>280){bar.classList.add('show')}else{bar.classList.remove('show')}}
+  window.addEventListener('scroll',upd,{passive:true});upd();
 })();
 </script>
 </body>
